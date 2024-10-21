@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Getter @Setter
+@Getter
+@Setter
 public class User {
     private Long id;
     private String email;

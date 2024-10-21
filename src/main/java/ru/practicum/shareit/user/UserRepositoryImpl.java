@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
                     users.stream().anyMatch(u -> email.equals(u.getEmail()) && !u.getId().equals(id))) {
                 throw new ValidationException("Пользователь с таким email уже существует");
             }
-            User userToUpdate = existedUser .get();
+            User userToUpdate = existedUser.get();
             if (user.getName() != null) {
                 userToUpdate.setName(user.getName());
             }
@@ -52,6 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
             throw new NotFoundException("Пользователь не найден");
         }
     }
+
     @Override
     public User findById(Long id) {
         Optional<User> existedUser  = users.stream()
@@ -78,6 +79,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteUser(Long id) {
         users.removeIf(user -> user.getId().equals(id));
     }
+
     private void isUserValid(User user) {
         String email = user.getEmail();
         if (email == null || !(email.contains("@"))) {

@@ -46,6 +46,7 @@ public class ItemRepositoryImpl implements ItemRepository {
         items.add(item);
         return item;
     }
+
     @Override
     public Item updateItem(Item item, Long id) {
         Optional<Item> existingItem = items.stream()
