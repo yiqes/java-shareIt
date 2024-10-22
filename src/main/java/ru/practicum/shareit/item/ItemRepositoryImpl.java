@@ -26,7 +26,7 @@ public class ItemRepositoryImpl implements ItemRepository {
         if (existingItem.isPresent()) {
             return existingItem.get();
         } else {
-            throw new NotFoundException("Предмет не найден");
+            throw new NotFoundException("Предмет с " + id + " не найден");
         }
     }
 
@@ -60,7 +60,7 @@ public class ItemRepositoryImpl implements ItemRepository {
             itemToUpdate.setOwnerId(item.getOwnerId());
             return itemToUpdate;
         } else {
-            throw new NotFoundException("Предмет не найден");
+            throw new NotFoundException("Предмет с " + id + " не найден");
         }
     }
 }

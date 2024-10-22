@@ -19,10 +19,11 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final List<Item> items = new ArrayList<>();
     private final UserService userService;
+    private final String header = "X-Sharer-User-Id";
     private long currentId = 1;
 
     @PostMapping
-    public ResponseEntity<ItemDto> addItem(@RequestHeader("X-Sharer-User-Id") long userId, @RequestBody ItemDto itemDto) {
+    public ResponseEntity<ItemDto> addItem(@RequestHeader(header) long userId, @RequestBody ItemDto itemDto) {
         userService.findById(userId);
         // Валидация полей
         if (itemDto.getName() == null || itemDto.getName().isEmpty()) {
@@ -44,7 +45,7 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")
-    public ResponseEntity<ItemDto> updateItem(@PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId, @RequestBody ItemDto itemDto) {
+    public ResponseEntity<ItemDto> updateItem(@PathVariable long itemId, @RequestHeader(header) long userId, @RequestBody ItemDto itemDto) {
         for (Item item : items) {
             if (item.getId() == itemId && item.getOwnerId() == userId) {
                 item.setName(itemDto.getName());
@@ -66,7 +67,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllItems(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public List<ItemDto> getAllItems(@RequestHeader(header) long userId) {
         List<ItemDto> result = new ArrayList<>();
         for (Item item : items) {
             if (item.getOwnerId() == userId) {
