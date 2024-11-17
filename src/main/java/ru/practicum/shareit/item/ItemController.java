@@ -19,7 +19,7 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/{item-id}")
     public ItemDto getItemById(@PathVariable Long itemId, @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен GET-запрос к эндпоинту: '/items' на получение вещи с ID={}", itemId);
         return itemService.getItemById(itemId, ownerId);
@@ -39,14 +39,14 @@ public class ItemController {
     }
 
     @ResponseBody
-    @PatchMapping("/{itemId}")
+    @PatchMapping("/{item-id}")
     public ItemDto update(@RequestBody ItemDto itemDto, @PathVariable Long itemId,
                           @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен PATCH-запрос к эндпоинту: '/items' на обновление вещи с ID={}", itemId);
         return itemService.update(itemDto, ownerId, itemId);
     }
 
-    @DeleteMapping("/{itemId}")
+    @DeleteMapping("/{item-id}")
     public void delete(@PathVariable Long itemId, @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен DELETE-запрос к эндпоинту: '/items' на удаление вещи с ID={}", itemId);
         itemService.delete(itemId, ownerId);
@@ -59,7 +59,7 @@ public class ItemController {
     }
 
     @ResponseBody
-    @PostMapping("/{itemId}/comment")
+    @PostMapping("/{item-id}/comment")
     public CommentDto createComment(@Valid @RequestBody CommentDto commentDto, @RequestHeader(OWNER) Long userId,
                                     @PathVariable Long itemId) {
         log.info("Получен POST-запрос к эндпоинту: '/items/comment' на" +
