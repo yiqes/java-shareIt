@@ -3,6 +3,7 @@ package ru.practicum.shareit.user;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.validation.constraints.Email;
 import java.time.Instant;
 
 @Entity
@@ -18,6 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Email
     private String email;
 
     @Column(name = "name", nullable = false)

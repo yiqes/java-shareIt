@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.UserNotFoundException;
+import ru.practicum.shareit.exception.ValidationException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto saveUser(UserDto userDto) {
+        if (!userDto.getEmail().contains("@")) {
+            throw new ValidationException("неверно задан email");
+        }
         User user = userMapper.toUser(userDto);
         User savedUser = userRepository.save(user);
         return userMapper.toUserDto(savedUser);
