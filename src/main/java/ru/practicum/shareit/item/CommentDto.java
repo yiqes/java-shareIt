@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.shareit.item.Item;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

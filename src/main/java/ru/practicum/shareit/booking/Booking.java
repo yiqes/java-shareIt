@@ -8,7 +8,6 @@ import lombok.Setter;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
