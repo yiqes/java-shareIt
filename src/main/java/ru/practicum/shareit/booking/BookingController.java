@@ -32,14 +32,14 @@ public class BookingController {
 
     @ResponseBody
     @PatchMapping("/{booking-id}")
-    public BookingDto update(@PathVariable Long bookingId,
+    public BookingDto update(@PathVariable("booking-id") Long bookingId,
                              @RequestHeader(USER_ID) Long userId, @RequestParam Boolean approved) {
         log.info("Получен PATCH-запрос к эндпоинту: '/bookings' на обновление статуса бронирования с ID={}", bookingId);
         return service.update(bookingId, userId, approved);
     }
 
     @GetMapping("/{booking-id}")
-    public BookingDto getBookingById(@PathVariable Long bookingId, @RequestHeader(USER_ID) Long userId) {
+    public BookingDto getBookingById(@PathVariable("booking-id") Long bookingId, @RequestHeader(USER_ID) Long userId) {
         log.info("Получен GET-запрос к эндпоинту: '/bookings' на получение бронирования с ID={}", bookingId);
         return service.getBookingById(bookingId, userId);
     }

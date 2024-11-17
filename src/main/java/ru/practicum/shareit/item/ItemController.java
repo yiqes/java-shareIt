@@ -20,7 +20,7 @@ public class ItemController {
     }
 
     @GetMapping("/{item-id}")
-    public ItemDto getItemById(@PathVariable Long itemId, @RequestHeader(OWNER) Long ownerId) {
+    public ItemDto getItemById(@PathVariable("item-id") Long itemId, @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен GET-запрос к эндпоинту: '/items' на получение вещи с ID={}", itemId);
         return itemService.getItemById(itemId, ownerId);
     }
@@ -40,14 +40,14 @@ public class ItemController {
 
     @ResponseBody
     @PatchMapping("/{item-id}")
-    public ItemDto update(@RequestBody ItemDto itemDto, @PathVariable Long itemId,
+    public ItemDto update(@RequestBody ItemDto itemDto, @PathVariable("item-id") Long itemId,
                           @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен PATCH-запрос к эндпоинту: '/items' на обновление вещи с ID={}", itemId);
         return itemService.update(itemDto, ownerId, itemId);
     }
 
     @DeleteMapping("/{item-id}")
-    public void delete(@PathVariable Long itemId, @RequestHeader(OWNER) Long ownerId) {
+    public void delete(@PathVariable("item-id") Long itemId, @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен DELETE-запрос к эндпоинту: '/items' на удаление вещи с ID={}", itemId);
         itemService.delete(itemId, ownerId);
     }
@@ -61,7 +61,7 @@ public class ItemController {
     @ResponseBody
     @PostMapping("/{item-id}/comment")
     public CommentDto createComment(@Valid @RequestBody CommentDto commentDto, @RequestHeader(OWNER) Long userId,
-                                    @PathVariable Long itemId) {
+                                    @PathVariable("item-id") Long itemId) {
         log.info("Получен POST-запрос к эндпоинту: '/items/comment' на" +
                 " добавление отзыва пользователем с ID={}", userId);
         return itemService.createComment(commentDto, itemId, userId);
