@@ -1,46 +1,64 @@
-
 package ru.practicum.shareit.item;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.model.Item;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import ru.practicum.shareit.service.ValidationService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
 public class ItemMapper {
 
-    // Метод для преобразования Item в ItemDto
-    public static ItemDto mapToItemDto(Item item) {
-        if (item == null) {
-            return null; // Обработка случая, когда item равен null
-        }
-        return new ItemDto(item.getId(), item.getName(), item.getDescription(), item.getAvailable(), item.getOwnerId());
+    private ValidationService validationService;
+
+    @Autowired
+    @Lazy
+    public ItemMapper(ValidationService validationService) {
+        this.validationService = validationService;
     }
 
-    // Метод для преобразования списка Item в список ItemDto
-    public static List<ItemDto> mapToItemDto(Iterable<Item> items) {
-        List<ItemDto> result = new ArrayList<>();
-        if (items != null) {
-            for (Item item : items) {
-                result.add(mapToItemDto(item));
-            }
-        }
-        return result;
+    public ItemDto toItemDto(Item item) {
+        return new ItemDto(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getAvailable(),
+                item.getOwner(),
+                item.getRequestId() != null ? item.getRequestId() : null,
+                null,
+                null,
+                validationService.getCommentsByItemId(item.getId()));
     }
 
-    // Метод для создания нового Item из ItemDto
-    public static Item mapToNewItem(ItemDto itemDto) {
-        if (itemDto == null) {
-            return null; // Обработка случая, когда itemDto равен null
-        }
-        Item item = new Item();
-        item.setName(itemDto.getName());
-        item.setDescription(itemDto.getDescription());
-        item.setAvailable(itemDto.getAvailable());
-        // ownerId не устанавливается здесь, так как он будет установлен в контроллере
-        return item;
+    public ItemDto toItemExtDto(Item item) {
+        return new ItemDto(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getAvailable(),
+                item.getOwner(),
+                item.getRequestId() != null ? item.getRequestId() : null,
+                validationService.getLastBooking(item.getId()),
+                validationService.getNextBooking(item.getId()),
+                validationService.getCommentsByItemId(item.getId()));
+    }
+
+    public Item toItem(ItemDto itemDto, Long ownerId) {
+        return new Item(
+                itemDto.getId(),
+                itemDto.getName(),
+                itemDto.getDescription(),
+                itemDto.getAvailable(),
+                validationService.findUserById(ownerId),
+                itemDto.getRequestId() != null ? itemDto.getRequestId() : null
+        );
+    }
+
+    public CommentDto toCommentDto(Comment comment) {
+        return new CommentDto(
+                comment.getId(),
+                comment.getText(),
+                comment.getItem(),
+                comment.getAuthor().getName(),
+                comment.getCreated());
     }
 }

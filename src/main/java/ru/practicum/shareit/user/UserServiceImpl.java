@@ -1,39 +1,76 @@
 package ru.practicum.shareit.user;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exception.UserNotFoundException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-class UserServiceImpl implements UserService {
-    private final UserRepository repository;
+@Transactional
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    @Override
-    public List<User> getAllUsers() {
-        return repository.findAll();
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public User saveUser(User user) {
-        return repository.save(user);
+    public UserDto saveUser(UserDto userDto) {
+        User user = userMapper.toUser(userDto);
+        User savedUser = userRepository.save(user);
+        return userMapper.toUserDto(savedUser);
     }
 
     @Override
-    public User updateUserById(User user, Long id) {
-        return repository.updateUserById(user, id);
+    public UserDto getUser(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toUserDto)
+                .orElse(null);
     }
 
     @Override
-    public User findById(Long id) {
-        return repository.findById(id);
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toUserDto)
+                .collect(Collectors.toList());
     }
-
 
     @Override
     public void deleteUser(Long id) {
-        repository.deleteUser(id);
+        userRepository.deleteById(id);
     }
 
+    @Override
+    public UserDto updateUserById(Long id, UserDto userDto) {
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    if (userDto.getName() != null) {
+                        existingUser.setName(userDto.getName());
+                    }
+                    if (userDto.getEmail() != null) {
+                        existingUser.setEmail(userDto.getEmail());
+                    }
+                    User updatedUser = userRepository.save(existingUser);
+
+                    return userMapper.toUserDto(updatedUser);
+                })
+                .orElseThrow(() -> new UserNotFoundException("User not found with id = " + id));
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id = " + userId + " not found!"));
+    }
 }
