@@ -18,21 +18,21 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByBookerIdAndStatus(Long bookerId, BookingStatus status, Sort sort);
 
-    List<Booking> findByItem_Owner_Id(Long ownerId, Sort sort);
+    List<Booking> findByItemOwnerId(Long ownerId, Sort sort);
 
-    List<Booking> findByItem_Owner_IdAndStartIsBeforeAndEndIsAfter(Long ownerId, LocalDateTime start,
-                                                                   LocalDateTime end, Sort sort);
+    List<Booking> findByItemOwnerIdAndStartIsBeforeAndEndIsAfter(Long ownerId, LocalDateTime start,
+                                                                 LocalDateTime end, Sort sort);
 
-    List<Booking> findByItem_Owner_IdAndEndIsBefore(Long bookerId, LocalDateTime end, Sort sort);
+    List<Booking> findByItemOwnerIdAndEndIsBefore(Long bookerId, LocalDateTime end, Sort sort);
 
-    List<Booking> findByItem_Owner_IdAndStartIsAfter(Long bookerId, LocalDateTime start, Sort sort);
+    List<Booking> findByItemOwnerIdAndStartIsAfter(Long bookerId, LocalDateTime start, Sort sort);
 
-    List<Booking> findByItem_Owner_IdAndStatus(Long bookerId, BookingStatus status, Sort sort);
+    List<Booking> findByItemOwnerIdAndStatus(Long bookerId, BookingStatus status, Sort sort);
 
-    Booking findFirstByItem_IdAndEndBeforeOrderByEndDesc(Long itemId, LocalDateTime end);
+    Booking findFirstByItemIdAndEndBeforeOrderByEndDesc(Long itemId, LocalDateTime end);
 
-    Booking findFirstByItem_IdAndStartAfterOrderByStartAsc(Long itemId, LocalDateTime end);
+    Booking findFirstByItemIdAndStartAfterOrderByStartAsc(Long itemId, LocalDateTime end);
 
-    Booking findFirstByItem_IdAndBooker_IdAndEndIsBeforeAndStatus(Long itemId, Long userId,
-                                                                  LocalDateTime end, BookingStatus status);
+    Booking findFirstByItemIdAndBookerIdAndEndIsBeforeAndStatus(Long itemId, Long userId,
+                                                                LocalDateTime end, BookingStatus status);
 }

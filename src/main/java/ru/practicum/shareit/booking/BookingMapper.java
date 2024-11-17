@@ -1,5 +1,7 @@
 package ru.practicum.shareit.booking;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.dto.BookingDto;
@@ -11,11 +13,12 @@ import ru.practicum.shareit.user.UserMapper;
 import ru.practicum.shareit.user.UserServiceImpl;
 
 @Component
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingMapper {
-    private UserServiceImpl userService;
-    private ItemServiceImpl itemService;
-    private UserMapper userMapper;
-    private ItemMapper itemMapper;
+    UserServiceImpl userService;
+    ItemServiceImpl itemService;
+    UserMapper userMapper;
+    ItemMapper itemMapper;
 
     @Autowired
     public BookingMapper(UserServiceImpl userService, ItemServiceImpl itemService,

@@ -2,6 +2,7 @@ package ru.practicum.shareit.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.Email;
 import java.time.Instant;
@@ -13,20 +14,21 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Email
-    private String email;
+    String email;
 
     @Column(name = "name", nullable = false)
-    private String name;
+    String name;
 
     @Column(name = "registration_date")
-    private Instant registrationDate = Instant.now();
+    Instant registrationDate = Instant.now();
 
 
     @Override

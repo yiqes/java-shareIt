@@ -1,21 +1,24 @@
 package ru.practicum.shareit.user;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
 
-    private Long id;
+    Long id;
 
-    private String email;
+    String email;
 
-    private String name;
+    String name;
 
-    private Instant registrationDate;
+    Instant registrationDate;
 }

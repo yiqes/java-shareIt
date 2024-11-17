@@ -1,5 +1,7 @@
 package ru.practicum.shareit.booking;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -23,13 +25,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingServiceImpl implements BookingService {
 
-    private final UserService userService;
+    UserService userService;
 
-    private final BookingRepository repository;
-    private final BookingMapper mapper;
-    private final ValidationService validationService;
+    BookingRepository repository;
+    BookingMapper mapper;
+    ValidationService validationService;
 
     @Autowired
     @Lazy
@@ -157,24 +160,24 @@ public class BookingServiceImpl implements BookingService {
                 if (userService.findUserById(userId) == null) {
                     throw new UserNotFoundException("Пользователь с id = " + userId + " не найден!");
                 }
-                bookings = repository.findByItem_Owner_Id(userId, sortByStartDesc);
+                bookings = repository.findByItemOwnerId(userId, sortByStartDesc);
                 break;
             case "CURRENT":
-                bookings = repository.findByItem_Owner_IdAndStartIsBeforeAndEndIsAfter(userId, LocalDateTime.now(),
+                bookings = repository.findByItemOwnerIdAndStartIsBeforeAndEndIsAfter(userId, LocalDateTime.now(),
                         LocalDateTime.now(), sortByStartDesc);
                 break;
             case "PAST":
-                bookings = repository.findByItem_Owner_IdAndEndIsBefore(userId, LocalDateTime.now(), sortByStartDesc);
+                bookings = repository.findByItemOwnerIdAndEndIsBefore(userId, LocalDateTime.now(), sortByStartDesc);
                 break;
             case "FUTURE":
-                bookings = repository.findByItem_Owner_IdAndStartIsAfter(userId, LocalDateTime.now(),
+                bookings = repository.findByItemOwnerIdAndStartIsAfter(userId, LocalDateTime.now(),
                         sortByStartDesc);
                 break;
             case "WAITING":
-                bookings = repository.findByItem_Owner_IdAndStatus(userId, BookingStatus.WAITING, sortByStartDesc);
+                bookings = repository.findByItemOwnerIdAndStatus(userId, BookingStatus.WAITING, sortByStartDesc);
                 break;
             case "REJECTED":
-                bookings = repository.findByItem_Owner_IdAndStatus(userId, BookingStatus.REJECTED, sortByStartDesc);
+                bookings = repository.findByItemOwnerIdAndStatus(userId, BookingStatus.REJECTED, sortByStartDesc);
                 break;
             default:
                 throw new ValidationException("Unknown state: " + state);
@@ -187,7 +190,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingShortDto getLastBooking(Long itemId) {
         BookingShortDto bookingShortDto =
-                mapper.toBookingShortDto(repository.findFirstByItem_IdAndEndBeforeOrderByEndDesc(itemId,
+                mapper.toBookingShortDto(repository.findFirstByItemIdAndEndBeforeOrderByEndDesc(itemId,
                         LocalDateTime.now()));
         return bookingShortDto;
     }
@@ -195,14 +198,14 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingShortDto getNextBooking(Long itemId) {
         BookingShortDto bookingShortDto =
-                mapper.toBookingShortDto(repository.findFirstByItem_IdAndStartAfterOrderByStartAsc(itemId,
+                mapper.toBookingShortDto(repository.findFirstByItemIdAndStartAfterOrderByStartAsc(itemId,
                         LocalDateTime.now()));
         return bookingShortDto;
     }
 
     @Override
     public Booking getBookingWithUserBookedItem(Long itemId, Long userId) {
-        return repository.findFirstByItem_IdAndBooker_IdAndEndIsBeforeAndStatus(itemId,
+        return repository.findFirstByItemIdAndBookerIdAndEndIsBeforeAndStatus(itemId,
                 userId, LocalDateTime.now(), BookingStatus.APPROVED);
     }
 }

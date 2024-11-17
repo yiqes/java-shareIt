@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,11 +21,12 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ItemServiceImpl implements ItemService {
-    private final ItemRepository repository;
-    private final CommentRepository commentRepository;
-    private final ValidationService validationService;
-    private final ItemMapper mapper;
+    ItemRepository repository;
+    CommentRepository commentRepository;
+    ValidationService validationService;
+    ItemMapper mapper;
 
     @Autowired
     @Lazy
