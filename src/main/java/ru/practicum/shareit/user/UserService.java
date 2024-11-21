@@ -4,13 +4,17 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    UserDto saveUser(UserDto userDto);
 
-    User saveUser(User user);
+    UserDto getUser(Long id);
 
-    User updateUserById(User user, Long id);
-
-    User findById(Long id);
+    List<UserDto> getAllUsers();
 
     void deleteUser(Long id);
+
+    UserDto updateUserById(Long id, UserDto userDto);
+
+    User findUserById(Long userId);
+
+    boolean existsById(Long id);
 }

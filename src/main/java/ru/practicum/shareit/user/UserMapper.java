@@ -1,31 +1,24 @@
 package ru.practicum.shareit.user;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-class UserMapper {
-    public static UserDto mapToUserDto(User user) {
-        return new UserDto(user.getId(), user.getEmail(), user.getName());
+@Component
+public class UserMapper {
+    public UserDto toUserDto(User user) {
+        return new UserDto(
+                user.getId(),
+                user.getEmail(),
+                user.getName(),
+                user.getRegistrationDate()
+        );
     }
 
-    public static List<UserDto> mapToUserDto(Iterable<User> users) {
-        List<UserDto> result = new ArrayList<>();
-
-        for (User user : users) {
-            result.add(mapToUserDto(user));
-        }
-
-        return result;
-    }
-
-    public static User mapToNewUser(UserDto userDto) {
-        User user = new User();
-        user.setEmail(userDto.getEmail());
-        user.setName(userDto.getName());
-        return user;
+    public User toUser(UserDto userDto) {
+        return new User(
+                userDto.getId(),
+                userDto.getEmail(),
+                userDto.getName(),
+                userDto.getRegistrationDate()
+        );
     }
 }
