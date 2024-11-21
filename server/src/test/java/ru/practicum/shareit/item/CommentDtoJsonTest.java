@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,10 +18,11 @@ public class CommentDtoJsonTest {
 
     @Test
     void testSerializeCommentDto() throws Exception {
-        CommentDto commentDto = new CommentDto(1L, "Comment Text", null, "Booker", LocalDateTime.now());
+        CommentDto commentDto = new CommentDto(1L, "Comment Text", null, "Booker", LocalDateTime.now().withNano(0));
         String json = objectMapper.writeValueAsString(commentDto);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        assertEquals("{\"id\":1,\"text\":\"Comment Text\",\"authorName\":\"Booker\",\"created\":\"" + commentDto.getCreated().toString() + "\"}", json);
+        assertEquals("{\"id\":1,\"text\":\"Comment Text\",\"authorName\":\"Booker\",\"created\":\"" + commentDto.getCreated().format(formatter) + "\"}", json);
     }
 
     @Test

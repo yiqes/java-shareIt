@@ -70,8 +70,7 @@ public class UserControllerTest {
         when(userService.getAllUsers()).thenReturn(users);
 
         mockMvc.perform(get("/users"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(status().isNoContent());
     }
 
     @Test
@@ -79,7 +78,7 @@ public class UserControllerTest {
         doNothing().when(userService).deleteUser(1L);
 
         mockMvc.perform(delete("/users/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @Test

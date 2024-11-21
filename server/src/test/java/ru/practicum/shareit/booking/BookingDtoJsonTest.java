@@ -8,6 +8,7 @@ import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingShortDto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,10 +20,11 @@ public class BookingDtoJsonTest {
 
     @Test
     void testSerializeBookingDto() throws Exception {
-        BookingDto bookingDto = new BookingDto(1L, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2), null, null, null);
+        BookingDto bookingDto = new BookingDto(1L, LocalDateTime.now().plusHours(1).withNano(0), LocalDateTime.now().plusHours(2).withNano(0), null, null, null);
         String json = objectMapper.writeValueAsString(bookingDto);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        assertEquals("{\"id\":1,\"start\":\"" + bookingDto.getStart().toString() + "\",\"end\":\"" + bookingDto.getEnd().toString() + "\",\"item\":null,\"booker\":null,\"status\":null}", json);
+        assertEquals("{\"id\":1,\"start\":\"" + bookingDto.getStart().format(formatter) + "\",\"end\":\"" + bookingDto.getEnd().format(formatter) + "\",\"item\":null,\"booker\":null,\"status\":null}", json);
     }
 
     @Test
@@ -37,10 +39,11 @@ public class BookingDtoJsonTest {
 
     @Test
     void testSerializeBookingShortDto() throws Exception {
-        BookingShortDto bookingShortDto = new BookingShortDto(1L, 1L, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2));
+        BookingShortDto bookingShortDto = new BookingShortDto(1L, 1L, LocalDateTime.now().plusHours(1).withNano(0), LocalDateTime.now().plusHours(2).withNano(0));
         String json = objectMapper.writeValueAsString(bookingShortDto);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        assertEquals("{\"id\":1,\"bookerId\":1,\"startTime\":\"" + bookingShortDto.getStartTime().toString() + "\",\"endTime\":\"" + bookingShortDto.getEndTime().toString() + "\"}", json);
+        assertEquals("{\"id\":1,\"bookerId\":1,\"startTime\":\"" + bookingShortDto.getStartTime().format(formatter) + "\",\"endTime\":\"" + bookingShortDto.getEndTime().format(formatter) + "\"}", json);
     }
 
     @Test

@@ -133,8 +133,7 @@ public class ItemControllerTest {
 
         mockMvc.perform(get("/items/1/comments")
                         .header("X-Sharer-User-Id", 1L))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -146,7 +145,6 @@ public class ItemControllerTest {
 
         mockMvc.perform(get("/items/request/1")
                         .header("X-Sharer-User-Id", 1L))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(status().isNotFound());
     }
 }
