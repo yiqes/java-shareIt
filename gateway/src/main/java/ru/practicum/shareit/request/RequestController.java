@@ -28,8 +28,8 @@ public class RequestController {
         return requestClient.create(requestDto, requestorId);
     }
 
-    @GetMapping("/{requestId}")
-    public ResponseEntity<Object> getItemRequestById(@PathVariable("requestId") Long itemRequestId,
+    @GetMapping("/{request-id}")
+    public ResponseEntity<Object> getItemRequestById(@PathVariable("request-id") Long itemRequestId,
                                                      @RequestHeader(USER_ID) Long userId) {
         log.info("Получен GET-запрос к эндпоинту: '/requests' на получение запроса с ID={}", itemRequestId);
         return requestClient.getItemRequestById(userId, itemRequestId);

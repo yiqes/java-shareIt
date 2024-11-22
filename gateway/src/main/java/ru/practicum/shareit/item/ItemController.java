@@ -20,6 +20,7 @@ import ru.practicum.shareit.item.dto.ItemDto;
 public class ItemController {
     private static final String USER_ID = "X-Sharer-User-Id";
     private final ItemClient itemClient;
+    private final String ID = "{item-id}";
 
 
     @GetMapping
@@ -37,23 +38,23 @@ public class ItemController {
         return itemClient.create(userId, itemDto);
     }
 
-    @GetMapping("/{itemId}")
+    @GetMapping(ID)
     public ResponseEntity<Object> getItemById(@RequestHeader(USER_ID) Long userId,
-                                              @PathVariable Long itemId) {
+                                              @PathVariable("item-id") Long itemId) {
         log.info("Запрос вещи {}, userId={}", itemId, userId);
         return itemClient.getItemById(userId, itemId);
     }
 
     @ResponseBody
-    @PatchMapping("/{itemId}")
-    public ResponseEntity<Object> update(@RequestBody ItemDto itemDto, @PathVariable Long itemId,
+    @PatchMapping(ID)
+    public ResponseEntity<Object> update(@RequestBody ItemDto itemDto, @PathVariable("item-id") Long itemId,
                                          @RequestHeader(USER_ID) Long userId) {
         log.info("Получен PATCH-запрос к эндпоинту: '/items' на обновление вещи с ID={}", itemId);
         return itemClient.update(itemDto, itemId, userId);
     }
 
-    @DeleteMapping("/{itemId}")
-    public ResponseEntity<Object> delete(@PathVariable Long itemId, @RequestHeader(USER_ID) Long ownerId) {
+    @DeleteMapping(ID)
+    public ResponseEntity<Object> delete(@PathVariable("item-id") Long itemId, @RequestHeader(USER_ID) Long ownerId) {
         log.info("Получен DELETE-запрос к эндпоинту: '/items' на удаление вещи с ID={}", itemId);
         return itemClient.delete(itemId, ownerId);
     }
@@ -67,10 +68,10 @@ public class ItemController {
     }
 
     @ResponseBody
-    @PostMapping("/{itemId}/comment")
+    @PostMapping("/{item-id}/comment")
     public ResponseEntity<Object> createComment(@RequestBody @Valid CommentDto commentDto,
                                                 @RequestHeader(USER_ID) Long userId,
-                                                @PathVariable Long itemId) {
+                                                @PathVariable("item-id") Long itemId) {
         log.info("Получен POST-запрос к эндпоинту: '/items/comment' на" +
                 " добавление отзыва пользователем с ID={}", userId);
         return itemClient.createComment(commentDto, itemId, userId);

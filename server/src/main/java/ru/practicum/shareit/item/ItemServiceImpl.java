@@ -126,10 +126,7 @@ public class ItemServiceImpl implements ItemService {
         validationService.isExistUser(userId);
         Booking booking = validationService.getBookingWithUserBookedItem(itemId, userId);
         Comment comment = new Comment();
-        /*comment.setCreated(LocalDateTime.now());
-        comment.setItem(findItemById(itemId));
-        comment.setAuthor(validationService.findUserById(userId));
-        comment.setText(commentDto.getText());*/
+
         if (booking != null) {
             comment.setCreated(LocalDateTime.now());
             comment.setItem(findItemById(itemId));
@@ -139,7 +136,6 @@ public class ItemServiceImpl implements ItemService {
         } else {
             throw new ValidationException("Данный пользователь вещь не бронировал!");
         }
-        //return mapper.toCommentDto(commentRepository.save(comment));
     }
 
     @Override
