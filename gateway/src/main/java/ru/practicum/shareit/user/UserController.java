@@ -16,7 +16,7 @@ import ru.practicum.shareit.user.dto.UserDto;
 @Validated
 public class UserController {
     private final UserClient userClient;
-    private final String PATH = "{user-id}";
+    private static final String PATH = "{user-id}";
 
     @GetMapping
     public ResponseEntity<Object> getUsers() {

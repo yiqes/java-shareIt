@@ -14,7 +14,7 @@ import java.util.List;
 public class BookingController {
     private static final String USER_ID = "X-Sharer-User-Id";
     private final BookingService service;
-    private final String ID = "{booking-id}";
+    private static final String ID = "{booking-id}";
 
     @Autowired
     public BookingController(BookingService bookingService) {
