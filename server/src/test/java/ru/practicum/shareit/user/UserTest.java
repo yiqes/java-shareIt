@@ -19,8 +19,9 @@ public class UserTest {
 
     @Test
     void testUserEquals() {
-        User user1 = new User(1L, "email@example.com", "John Doe", Instant.now());
-        User user2 = new User(1L, "email@example.com", "John Doe", Instant.now());
+        Instant timing = Instant.now();
+        User user1 = new User(1L, "email@example.com", "John Doe", timing);
+        User user2 = new User(1L, "email@example.com", "John Doe", timing);
         User user3 = new User(2L, "email@example.com", "John Doe", Instant.now());
         User user4 = new User(3L, "other@example.com", "John Doe", Instant.now());
         User user5 = new User(1L, "email@example.com", "Jane Doe", Instant.now());
@@ -37,12 +38,14 @@ public class UserTest {
 
     @Test
     void testUserHashCode() {
-        User user1 = new User(1L, "email@example.com", "John Doe", Instant.now());
-        User user2 = new User(1L, "email@example.com", "John Doe", Instant.now());
+        Instant timing = Instant.now();
+
+        User user1 = new User(1L, "email@example.com", "John Doe", timing);
+        User user2 = new User(1L, "email@example.com", "John Doe", timing);
         User user3 = new User(2L, "email@3example.com", "John3 Doe", Instant.now());
         User user4 = new User(1L, "other@example.com", "John Doe", Instant.now());
         User user5 = new User(1L, "email@example.com", "Jane Doe", Instant.now());
-        System.out.println(user1.hashCode() + "           " + user3.hashCode());
+        System.out.println(user1.hashCode() + "           " + user3.hashCode() + "    " + user2.hashCode());
         assertEquals(user1.hashCode(), user2.hashCode());
         assertNotEquals(user1.hashCode(), user3.hashCode());
         assertNotEquals(user1.hashCode(), user4.hashCode());
