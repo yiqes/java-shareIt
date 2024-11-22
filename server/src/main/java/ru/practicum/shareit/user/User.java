@@ -3,7 +3,6 @@ package ru.practicum.shareit.user;
 import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.proxy.HibernateProxy;
 
 import jakarta.persistence.*;
 import java.time.Instant;
