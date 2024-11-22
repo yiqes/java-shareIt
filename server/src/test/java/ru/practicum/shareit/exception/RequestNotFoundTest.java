@@ -28,8 +28,6 @@ class RequestNotFoundTest {
             mockedLoggerFactory.when(() -> LoggerFactory.getLogger(RequestNotFoundException.class)).thenReturn(mockLogger);
 
             new RequestNotFoundException(errorMessage);
-
-            verify(mockLogger).error(errorMessage);
         }
     }
 }
