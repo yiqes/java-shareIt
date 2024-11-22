@@ -8,6 +8,7 @@ import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.booking.dto.BookingShortDto;
 import ru.practicum.shareit.item.CommentDto;
+import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserService;
@@ -49,6 +50,7 @@ public class ValidationService {
     public User findUserById(Long userId) {
         return userService.findUserById(userId);
     }
+
 
     public BookingShortDto getLastBooking(Long itemId) {
         return bookingService.getLastBooking(itemId);

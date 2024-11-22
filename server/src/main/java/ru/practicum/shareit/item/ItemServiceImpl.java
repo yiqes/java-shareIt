@@ -124,22 +124,27 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public CommentDto createComment(CommentDto commentDto, Long itemId, Long userId) {
         validationService.isExistUser(userId);
-        Comment comment = new Comment();
         Booking booking = validationService.getBookingWithUserBookedItem(itemId, userId);
+        Comment comment = new Comment();
+        /*comment.setCreated(LocalDateTime.now());
+        comment.setItem(findItemById(itemId));
+        comment.setAuthor(validationService.findUserById(userId));
+        comment.setText(commentDto.getText());*/
         if (booking != null) {
             comment.setCreated(LocalDateTime.now());
-            comment.setItem(booking.getItem());
-            comment.setAuthor(booking.getBooker());
+            comment.setItem(findItemById(itemId));
+            comment.setAuthor(validationService.findUserById(userId));
             comment.setText(commentDto.getText());
+            return mapper.toCommentDto(commentRepository.save(comment));
         } else {
             throw new ValidationException("Данный пользователь вещь не бронировал!");
         }
-        return mapper.toCommentDto(commentRepository.save(comment));
+        //return mapper.toCommentDto(commentRepository.save(comment));
     }
 
     @Override
     public List<CommentDto> getCommentsByItemId(Long itemId) {
-        return commentRepository.findAllByItem_Id(itemId,
+        return commentRepository.findAllByItemId(itemId,
                         Sort.by(Sort.Direction.DESC, "created")).stream()
                 .map(mapper::toCommentDto)
                 .collect(toList());
