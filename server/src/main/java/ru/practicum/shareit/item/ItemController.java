@@ -12,7 +12,7 @@ import java.util.List;
 public class ItemController {
     private static final String OWNER = "X-Sharer-User-Id";
     private ItemService itemService;
-    private static final String ITEM_ID = "{itemId}";
+    private static final String ITEM_ID = "{item-id}";
 
     @Autowired
     public ItemController(ItemService itemService) {
