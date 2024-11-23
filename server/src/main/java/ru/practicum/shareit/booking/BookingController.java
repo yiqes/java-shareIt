@@ -14,6 +14,7 @@ import java.util.List;
 public class BookingController {
     private static final String USER_ID = "X-Sharer-User-Id";
     private final BookingService service;
+    private static final String BOOKING_ID = "{booking-id}";
 
     @Autowired
     public BookingController(BookingService bookingService) {
@@ -30,14 +31,14 @@ public class BookingController {
     }
 
     @ResponseBody
-    @PatchMapping("/{booking-id}")
+    @PatchMapping(BOOKING_ID)
     public BookingDto update(@PathVariable("booking-id") Long bookingId,
                              @RequestHeader(USER_ID) Long userId, @RequestParam Boolean approved) {
         log.info("Получен PATCH-запрос к эндпоинту: '/bookings' на обновление статуса бронирования с ID={}", bookingId);
         return service.update(bookingId, userId, approved);
     }
 
-    @GetMapping("/{booking-id}")
+    @GetMapping(BOOKING_ID)
     public BookingDto getBookingById(@PathVariable("booking-id") Long bookingId, @RequestHeader(USER_ID) Long userId) {
         log.info("Получен GET-запрос к эндпоинту: '/bookings' на получение бронирования с ID={}", bookingId);
         return service.getBookingById(bookingId, userId);

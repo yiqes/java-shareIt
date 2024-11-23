@@ -13,6 +13,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private static final String USER_ID = "{user-id}";
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
@@ -20,9 +21,9 @@ public class UserController {
         return ResponseEntity.ok(createdUser);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
-        UserDto userDto = userService.getUser(id);
+    @GetMapping(USER_ID)
+    public ResponseEntity<UserDto> getUser(@PathVariable("user-id") Long userId) {
+        UserDto userDto = userService.getUser(userId);
         return userDto != null ? ResponseEntity.ok(userDto) : ResponseEntity.notFound().build();
     }
 
@@ -32,19 +33,19 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+    @PatchMapping(USER_ID)
+    public ResponseEntity<UserDto> updateUser(@PathVariable("user-id") Long userId, @RequestBody UserDto userDto) {
         try {
-            UserDto updatedUser = userService.updateUserById(id, userDto);
+            UserDto updatedUser = userService.updateUserById(userId, userDto);
             return ResponseEntity.ok(updatedUser);
         } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    @DeleteMapping(USER_ID)
+    public ResponseEntity<Void> deleteUser(@PathVariable("user-id") Long userId) {
+        userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
 }

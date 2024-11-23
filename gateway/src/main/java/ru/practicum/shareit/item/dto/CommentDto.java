@@ -1,17 +1,20 @@
 package ru.practicum.shareit.item.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommentDto {
-    private Long id;                // уникальный идентификатор комментария;
+    Long id;                // уникальный идентификатор комментария;
     @NotBlank
-    private String text;            // содержимое комментария;
-    private String authorName;      // имя автора комментария;
-    private LocalDateTime created;  // дата создания комментария.
+    String text;            // содержимое комментария;
+    String authorName;      // имя автора комментария;
+    LocalDateTime created;  // дата создания комментария.
 }

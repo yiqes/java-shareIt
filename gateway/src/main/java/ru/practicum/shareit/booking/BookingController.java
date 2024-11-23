@@ -20,6 +20,7 @@ import ru.practicum.shareit.booking.dto.BookingState;
 public class BookingController {
     private static final String USER_ID = "X-Sharer-User-Id";
     private final BookingClient bookingClient;
+    private static final String BOOKING_ID = "{booking-id}";
 
     @GetMapping
     public ResponseEntity<Object> getBookings(@RequestHeader(USER_ID) Long userId,
@@ -53,16 +54,16 @@ public class BookingController {
         return bookingClient.create(userId, requestDto);
     }
 
-    @GetMapping("/{bookingId}")
+    @GetMapping(BOOKING_ID)
     public ResponseEntity<Object> getBooking(@RequestHeader(USER_ID) Long userId,
-                                             @PathVariable Long bookingId) {
+                                             @PathVariable("booking-id") Long bookingId) {
         log.info("Get booking {}, userId={}", bookingId, userId);
         return bookingClient.getBooking(userId, bookingId);
     }
 
     @ResponseBody
-    @PatchMapping("/{bookingId}")
-    public ResponseEntity<Object> update(@PathVariable Long bookingId,
+    @PatchMapping(BOOKING_ID)
+    public ResponseEntity<Object> update(@PathVariable("booking-id") Long bookingId,
                                          @RequestHeader(USER_ID) Long userId, @RequestParam Boolean approved) {
         log.info("Получен PATCH-запрос к эндпоинту: '/bookings' на обновление статуса бронирования с ID={}",
                 bookingId);

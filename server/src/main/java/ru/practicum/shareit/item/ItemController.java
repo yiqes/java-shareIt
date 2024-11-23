@@ -12,13 +12,14 @@ import java.util.List;
 public class ItemController {
     private static final String OWNER = "X-Sharer-User-Id";
     private ItemService itemService;
+    private static final String ITEM_ID = "{itemId}";
 
     @Autowired
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
 
-    @GetMapping("/{item-id}")
+    @GetMapping(ITEM_ID)
     public ItemDto getItemById(@PathVariable("item-id") Long itemId, @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен GET-запрос к эндпоинту: '/items' на получение вещи с ID={}", itemId);
         return itemService.getItemById(itemId, ownerId);
@@ -38,14 +39,14 @@ public class ItemController {
     }
 
     @ResponseBody
-    @PatchMapping("/{item-id}")
+    @PatchMapping(ITEM_ID)
     public ItemDto update(@RequestBody ItemDto itemDto, @PathVariable("item-id") Long itemId,
                           @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен PATCH-запрос к эндпоинту: '/items' на обновление вещи с ID={}", itemId);
         return itemService.update(itemDto, ownerId, itemId);
     }
 
-    @DeleteMapping("/{item-id}")
+    @DeleteMapping(ITEM_ID)
     public void delete(@PathVariable("item-id") Long itemId, @RequestHeader(OWNER) Long ownerId) {
         log.info("Получен DELETE-запрос к эндпоинту: '/items' на удаление вещи с ID={}", itemId);
         itemService.delete(itemId, ownerId);
