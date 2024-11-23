@@ -16,13 +16,14 @@ import ru.practicum.shareit.user.dto.UserDto;
 @Validated
 public class UserController {
     private final UserClient userClient;
+    private static final String PATH = "{user-id}";
 
     @GetMapping
     public ResponseEntity<Object> getUsers() {
         return userClient.getUsers();
     }
 
-    @GetMapping("/{user-id}")
+    @GetMapping(PATH)
     public ResponseEntity<Object> getUserById(@PathVariable("user-id") Long userId) {
         return userClient.getUserById(userId);
     }
@@ -35,13 +36,13 @@ public class UserController {
     }
 
     @ResponseBody
-    @PatchMapping("/{user-id}")
+    @PatchMapping(PATH)
     public ResponseEntity<Object> update(@PathVariable("user-id") Long userId, @RequestBody UserDto userDto) {
         log.info("Получен PATCH-запрос к эндпоинту: '/users' на обновление пользователя с ID{}", userId);
         return userClient.update(userDto, userId);
     }
 
-    @DeleteMapping("/{user-id}")
+    @DeleteMapping(PATH)
     public ResponseEntity<Object> delete(@PathVariable("user-id") Long userId) {
         log.info("Получен DELETE-запрос к эндпоинту: '/users' на обновление пользователя с ID{}", userId);
         return userClient.delete(userId);
