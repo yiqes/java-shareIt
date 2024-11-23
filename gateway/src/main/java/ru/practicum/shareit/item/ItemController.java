@@ -20,7 +20,7 @@ import ru.practicum.shareit.item.dto.ItemDto;
 public class ItemController {
     private static final String USER_ID = "X-Sharer-User-Id";
     private final ItemClient itemClient;
-    private static final String ITEM_ID = "{itemId}";
+    private static final String ITEM_ID = "{item-id}";
 
 
     @GetMapping
