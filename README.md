@@ -150,6 +150,134 @@
 
 ## Запуск приложения
 
+## Запуск с использованием Docker
+
+### 1. **Запуск с использованием Docker Compose**
+
+1. Убедитесь, что у вас установлены:
+   - Docker
+   - Docker Compose
+
+2. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/your-repo/shareit.git
+   cd shareit
+   ```
+
+3. Запустите приложение с помощью Docker Compose:
+   ```bash
+   docker-compose up --build
+   ```
+
+4. После запуска приложение будет доступно:
+  - **Gateway**: `http://localhost:8080`
+  - **Server**: `http://localhost:9090`
+
+5. Остановка приложения:
+   ```bash
+   docker-compose down
+   ```
+
+---
+
+### 2. **Конфигурация Docker Compose**
+
+Конфигурация `docker-compose.yml` включает следующие сервисы:
+
+- **PostgreSQL**: База данных для хранения данных приложения.
+- **Gateway**: Шлюз для обработки запросов и взаимодействия с основным сервисом.
+- **Server**: Основной сервис приложения.
+
+Пример конфигурации `docker-compose.yml`:
+```yaml
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16.1
+    container_name: postgres
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_PASSWORD=shareit
+      - POSTGRES_USER=shareit
+      - POSTGRES_DB=shareit
+    volumes:
+      - ./server/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/initDB.sql
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  gateway:
+    build: gateway
+    image: shareit-gateway
+    container_name: shareit-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - server
+    environment:
+      - SHAREIT_SERVER_URL=http://server:9090
+
+  server:
+    build: server
+    image: shareit-server
+    container_name: shareit-server
+    ports:
+      - "9090:9090"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shareit
+      - SPRING_DATASOURCE_USERNAME=shareit
+      - SPRING_DATASOURCE_PASSWORD=shareit
+    volumes:
+      - ./server/src/main/resources/application.properties:/app/application.properties
+```
+
+---
+
+### 3. **Сборка и запуск отдельных контейнеров**
+
+Если вы хотите собрать и запустить контейнеры вручную:
+
+1. Соберите образы:
+   ```bash
+   docker build -t shareit-gateway -f gateway/Dockerfile .
+   docker build -t shareit-server -f server/Dockerfile .
+   ```
+
+2. Запустите контейнеры:
+   ```bash
+   docker run -d --name postgres -p 6541:5432 \
+     -e POSTGRES_PASSWORD=shareit \
+     -e POSTGRES_USER=shareit \
+     -e POSTGRES_DB=shareit \
+     postgres:16.1
+
+   docker run -d --name shareit-server -p 9090:9090 \
+     -e SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shareit \
+     -e SPRING_DATASOURCE_USERNAME=shareit \
+     -e SPRING_DATASOURCE_PASSWORD=shareit \
+     shareit-server
+
+   docker run -d --name shareit-gateway -p 8080:8080 \
+     -e SHAREIT_SERVER_URL=http://server:9090 \
+     shareit-gateway
+   ```
+
+3. Остановка контейнеров:
+   ```bash
+   docker stop shareit-gateway shareit-server postgres
+   docker rm shareit-gateway shareit-server postgres
+   ```
+
+---
+
+## Запуск с использованием Maven
 1. Убедитесь, что у вас установлены:
     - Java 21
     - Maven
