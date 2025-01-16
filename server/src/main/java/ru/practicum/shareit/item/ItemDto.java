@@ -8,6 +8,9 @@ import ru.practicum.shareit.user.User;
 
 import java.util.List;
 
+/**
+ * The type Item dto.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

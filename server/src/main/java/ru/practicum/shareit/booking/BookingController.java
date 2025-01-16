@@ -8,6 +8,9 @@ import ru.practicum.shareit.booking.dto.BookingInputDto;
 
 import java.util.List;
 
+/**
+ * The type Booking controller.
+ */
 @Slf4j
 @RestController
 @RequestMapping(path = "/bookings")
@@ -16,11 +19,23 @@ public class BookingController {
     private final BookingService service;
     private static final String BOOKING_ID = "{booking-id}";
 
+    /**
+     * Instantiates a new Booking controller.
+     *
+     * @param bookingService the booking service
+     */
     @Autowired
     public BookingController(BookingService bookingService) {
         this.service = bookingService;
     }
 
+    /**
+     * Create booking dto.
+     *
+     * @param bookingInputDto the booking input dto
+     * @param bookerId        the booker id
+     * @return the booking dto
+     */
     @ResponseBody
     @PostMapping
     public BookingDto create(@RequestBody BookingInputDto bookingInputDto,
@@ -30,6 +45,14 @@ public class BookingController {
         return service.create(bookingInputDto, bookerId);
     }
 
+    /**
+     * Update booking dto.
+     *
+     * @param bookingId the booking id
+     * @param userId    the user id
+     * @param approved  the approved
+     * @return the booking dto
+     */
     @ResponseBody
     @PatchMapping(BOOKING_ID)
     public BookingDto update(@PathVariable("booking-id") Long bookingId,
@@ -38,12 +61,26 @@ public class BookingController {
         return service.update(bookingId, userId, approved);
     }
 
+    /**
+     * Gets booking by id.
+     *
+     * @param bookingId the booking id
+     * @param userId    the user id
+     * @return the booking by id
+     */
     @GetMapping(BOOKING_ID)
     public BookingDto getBookingById(@PathVariable("booking-id") Long bookingId, @RequestHeader(USER_ID) Long userId) {
         log.info("Получен GET-запрос к эндпоинту: '/bookings' на получение бронирования с ID={}", bookingId);
         return service.getBookingById(bookingId, userId);
     }
 
+    /**
+     * Gets bookings.
+     *
+     * @param state  the state
+     * @param userId the user id
+     * @return the bookings
+     */
     @GetMapping
     public List<BookingDto> getBookings(@RequestParam(name = "state", defaultValue = "ALL") String state,
                                         @RequestHeader(USER_ID) Long userId) {
@@ -52,6 +89,13 @@ public class BookingController {
         return service.getBookings(state, userId);
     }
 
+    /**
+     * Gets bookings owner.
+     *
+     * @param state  the state
+     * @param userId the user id
+     * @return the bookings owner
+     */
     @GetMapping("/owner")
     public List<BookingDto> getBookingsOwner(@RequestParam(name = "state", defaultValue = "ALL") String state,
                                              @RequestHeader(USER_ID) Long userId) {

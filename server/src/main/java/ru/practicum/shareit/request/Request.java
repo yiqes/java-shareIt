@@ -7,6 +7,9 @@ import ru.practicum.shareit.user.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * The type Request.
+ */
 @Entity
 @Table(name = "requests")
 @Getter

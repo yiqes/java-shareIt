@@ -16,12 +16,22 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * The type Request service.
+ */
 @Service
 public class RequestServiceImpl implements RequestService {
     private final RequestRepository requestRepository;
     private final ValidationService validationService;
     private final RequestMapper requestMapper;
 
+    /**
+     * Instantiates a new Request service.
+     *
+     * @param requestRepository the request repository
+     * @param validationService the validation service
+     * @param requestMapper     the request mapper
+     */
     @Autowired
     public RequestServiceImpl(RequestRepository requestRepository, ValidationService validationService,
                               RequestMapper requestMapper) {

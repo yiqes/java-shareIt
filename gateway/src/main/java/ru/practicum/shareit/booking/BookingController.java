@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookItemRequestDto;
 import ru.practicum.shareit.booking.dto.BookingState;
 
+/**
+ * The type Booking controller.
+ */
 @Controller
 @RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
@@ -22,6 +25,15 @@ public class BookingController {
     private final BookingClient bookingClient;
     private static final String BOOKING_ID = "{booking-id}";
 
+    /**
+     * Gets bookings.
+     *
+     * @param userId     the user id
+     * @param stateParam the state param
+     * @param from       the from
+     * @param size       the size
+     * @return the bookings
+     */
     @GetMapping
     public ResponseEntity<Object> getBookings(@RequestHeader(USER_ID) Long userId,
                                               @RequestParam(name = "state", defaultValue = "all") String stateParam,
@@ -34,6 +46,15 @@ public class BookingController {
         return bookingClient.getBookings(userId, state, from, size);
     }
 
+    /**
+     * Gets bookings owner.
+     *
+     * @param stateParam the state param
+     * @param userId     the user id
+     * @param from       the from
+     * @param size       the size
+     * @return the bookings owner
+     */
     @GetMapping("/owner")
     public ResponseEntity<Object> getBookingsOwner(@RequestParam(name = "state", defaultValue = "all")
                                                    String stateParam,
@@ -47,6 +68,13 @@ public class BookingController {
         return bookingClient.getBookingsOwner(userId, state, from, size);
     }
 
+    /**
+     * Create response entity.
+     *
+     * @param userId     the user id
+     * @param requestDto the request dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<Object> create(@RequestHeader(USER_ID) Long userId,
                                          @RequestBody @Valid BookItemRequestDto requestDto) {
@@ -54,6 +82,13 @@ public class BookingController {
         return bookingClient.create(userId, requestDto);
     }
 
+    /**
+     * Gets booking.
+     *
+     * @param userId    the user id
+     * @param bookingId the booking id
+     * @return the booking
+     */
     @GetMapping(BOOKING_ID)
     public ResponseEntity<Object> getBooking(@RequestHeader(USER_ID) Long userId,
                                              @PathVariable("booking-id") Long bookingId) {
@@ -61,6 +96,14 @@ public class BookingController {
         return bookingClient.getBooking(userId, bookingId);
     }
 
+    /**
+     * Update response entity.
+     *
+     * @param bookingId the booking id
+     * @param userId    the user id
+     * @param approved  the approved
+     * @return the response entity
+     */
     @ResponseBody
     @PatchMapping(BOOKING_ID)
     public ResponseEntity<Object> update(@PathVariable("booking-id") Long bookingId,

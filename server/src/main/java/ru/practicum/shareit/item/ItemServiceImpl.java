@@ -20,6 +20,9 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * The type Item service.
+ */
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ItemServiceImpl implements ItemService {
@@ -28,6 +31,14 @@ public class ItemServiceImpl implements ItemService {
     ValidationService validationService;
     ItemMapper mapper;
 
+    /**
+     * Instantiates a new Item service.
+     *
+     * @param repository        the repository
+     * @param commentRepository the comment repository
+     * @param validationService the validation service
+     * @param itemMapper        the item mapper
+     */
     @Autowired
     @Lazy
     public ItemServiceImpl(ItemRepository repository, CommentRepository commentRepository,

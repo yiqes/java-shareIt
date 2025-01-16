@@ -11,6 +11,9 @@ import ru.practicum.shareit.user.dto.UserDto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Request dto.
+ */
 @Data
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

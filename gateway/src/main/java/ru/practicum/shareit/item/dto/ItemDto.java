@@ -11,6 +11,9 @@ import ru.practicum.shareit.booking.dto.BookingShortDto;
 
 import java.util.List;
 
+/**
+ * The type Item dto.
+ */
 @Data
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

@@ -9,6 +9,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 
+/**
+ * The type Booking.
+ */
 @Entity
 @Getter
 @Setter

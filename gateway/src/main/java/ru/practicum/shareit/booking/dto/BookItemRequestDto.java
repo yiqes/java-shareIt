@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * The type Book item request dto.
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

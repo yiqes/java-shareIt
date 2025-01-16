@@ -7,6 +7,9 @@ import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Comment.
+ */
 @Entity
 @Table(name = "comments")
 @NoArgsConstructor
