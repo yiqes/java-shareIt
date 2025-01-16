@@ -8,11 +8,20 @@ import ru.practicum.shareit.exception.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type User service.
+ */
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    /**
+     * Instantiates a new User service.
+     *
+     * @param userRepository the user repository
+     * @param userMapper     the user mapper
+     */
     @Autowired
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;

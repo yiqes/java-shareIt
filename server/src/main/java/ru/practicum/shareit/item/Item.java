@@ -5,6 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.user.User;
 
+/**
+ * The type Item.
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

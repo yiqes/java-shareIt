@@ -3,6 +3,9 @@ package ru.practicum.shareit.util;
 import lombok.Getter;
 import ru.practicum.shareit.exception.ValidationException;
 
+/**
+ * The type Pagination.
+ */
 @Getter
 public class Pagination {
     private Integer pageSize;
@@ -10,6 +13,12 @@ public class Pagination {
     private Integer totalPages;
 
 
+    /**
+     * Instantiates a new Pagination.
+     *
+     * @param from the from
+     * @param size the size
+     */
     public Pagination(Integer from, Integer size) {
         if (size != null) {
             if ((from < 0) || (size < 0)) {

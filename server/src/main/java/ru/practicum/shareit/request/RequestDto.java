@@ -8,6 +8,9 @@ import ru.practicum.shareit.user.UserDto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Request dto.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

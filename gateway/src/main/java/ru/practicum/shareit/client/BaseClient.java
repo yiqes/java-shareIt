@@ -12,69 +12,203 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * The type Base client.
+ */
 public class BaseClient {
+    /**
+     * The Rest.
+     */
     protected final RestTemplate rest;
 
+    /**
+     * Instantiates a new Base client.
+     *
+     * @param rest the rest
+     */
     public BaseClient(RestTemplate rest) {
         this.rest = rest;
     }
 
+    /**
+     * Get response entity.
+     *
+     * @param path the path
+     * @return the response entity
+     */
     protected ResponseEntity<Object> get(String path) {
         return get(path, null, null);
     }
 
+    /**
+     * Get response entity.
+     *
+     * @param path   the path
+     * @param userId the user id
+     * @return the response entity
+     */
     protected ResponseEntity<Object> get(String path, long userId) {
         return get(path, userId, null);
     }
 
+    /**
+     * Get response entity.
+     *
+     * @param path       the path
+     * @param userId     the user id
+     * @param parameters the parameters
+     * @return the response entity
+     */
     protected ResponseEntity<Object> get(String path, Long userId, @Nullable Map<String, Object> parameters) {
         return makeAndSendRequest(HttpMethod.GET, path, userId, parameters, null);
     }
 
+    /**
+     * Post response entity.
+     *
+     * @param <T>  the type parameter
+     * @param path the path
+     * @param body the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> post(String path, T body) {
         return post(path, null, null, body);
     }
 
+    /**
+     * Post response entity.
+     *
+     * @param <T>    the type parameter
+     * @param path   the path
+     * @param userId the user id
+     * @param body   the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> post(String path, long userId, T body) {
         return post(path, userId, null, body);
     }
 
+    /**
+     * Post response entity.
+     *
+     * @param <T>        the type parameter
+     * @param path       the path
+     * @param userId     the user id
+     * @param parameters the parameters
+     * @param body       the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> post(String path, Long userId, @Nullable Map<String, Object> parameters, T body) {
         return makeAndSendRequest(HttpMethod.POST, path, userId, parameters, body);
     }
 
+    /**
+     * Put response entity.
+     *
+     * @param <T>    the type parameter
+     * @param path   the path
+     * @param userId the user id
+     * @param body   the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> put(String path, long userId, T body) {
         return put(path, userId, null, body);
     }
 
+    /**
+     * Put response entity.
+     *
+     * @param <T>        the type parameter
+     * @param path       the path
+     * @param userId     the user id
+     * @param parameters the parameters
+     * @param body       the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> put(String path, long userId, @Nullable Map<String, Object> parameters, T body) {
         return makeAndSendRequest(HttpMethod.PUT, path, userId, parameters, body);
     }
 
+    /**
+     * Patch response entity.
+     *
+     * @param <T>  the type parameter
+     * @param path the path
+     * @param body the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> patch(String path, T body) {
         return patch(path, null, null, body);
     }
 
+    /**
+     * Patch response entity.
+     *
+     * @param <T>    the type parameter
+     * @param path   the path
+     * @param userId the user id
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> patch(String path, long userId) {
         return patch(path, userId, null, null);
     }
 
+    /**
+     * Patch response entity.
+     *
+     * @param <T>    the type parameter
+     * @param path   the path
+     * @param userId the user id
+     * @param body   the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> patch(String path, long userId, T body) {
         return patch(path, userId, null, body);
     }
 
+    /**
+     * Patch response entity.
+     *
+     * @param <T>        the type parameter
+     * @param path       the path
+     * @param userId     the user id
+     * @param parameters the parameters
+     * @param body       the body
+     * @return the response entity
+     */
     protected <T> ResponseEntity<Object> patch(String path, Long userId, @Nullable Map<String, Object> parameters, T body) {
         return makeAndSendRequest(HttpMethod.PATCH, path, userId, parameters, body);
     }
 
+    /**
+     * Delete response entity.
+     *
+     * @param path the path
+     * @return the response entity
+     */
     protected ResponseEntity<Object> delete(String path) {
         return delete(path, null, null);
     }
 
+    /**
+     * Delete response entity.
+     *
+     * @param path   the path
+     * @param userId the user id
+     * @return the response entity
+     */
     protected ResponseEntity<Object> delete(String path, long userId) {
         return delete(path, userId, null);
     }
 
+    /**
+     * Delete response entity.
+     *
+     * @param path       the path
+     * @param userId     the user id
+     * @param parameters the parameters
+     * @return the response entity
+     */
     protected ResponseEntity<Object> delete(String path, Long userId, @Nullable Map<String, Object> parameters) {
         return makeAndSendRequest(HttpMethod.DELETE, path, userId, parameters, null);
     }

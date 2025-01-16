@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * The type User dto.
+ */
 @Data
 @AllArgsConstructor
 public class UserDto {

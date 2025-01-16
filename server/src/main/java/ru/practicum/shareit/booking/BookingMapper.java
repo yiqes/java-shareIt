@@ -12,6 +12,9 @@ import ru.practicum.shareit.item.ItemServiceImpl;
 import ru.practicum.shareit.user.UserMapper;
 import ru.practicum.shareit.user.UserServiceImpl;
 
+/**
+ * The type Booking mapper.
+ */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingMapper {
@@ -20,6 +23,14 @@ public class BookingMapper {
     UserMapper userMapper;
     ItemMapper itemMapper;
 
+    /**
+     * Instantiates a new Booking mapper.
+     *
+     * @param userService the user service
+     * @param itemService the item service
+     * @param userMapper  the user mapper
+     * @param itemMapper  the item mapper
+     */
     @Autowired
     public BookingMapper(UserServiceImpl userService, ItemServiceImpl itemService,
                          UserMapper userMapper, ItemMapper itemMapper) {
@@ -29,6 +40,12 @@ public class BookingMapper {
         this.itemMapper = itemMapper;
     }
 
+    /**
+     * To booking dto booking dto.
+     *
+     * @param booking the booking
+     * @return the booking dto
+     */
     public BookingDto toBookingDto(Booking booking) {
         if (booking != null) {
             return new BookingDto(
@@ -44,6 +61,12 @@ public class BookingMapper {
         }
     }
 
+    /**
+     * To booking short dto booking short dto.
+     *
+     * @param booking the booking
+     * @return the booking short dto
+     */
     public BookingShortDto toBookingShortDto(Booking booking) {
         if (booking != null) {
             return new BookingShortDto(
@@ -57,6 +80,13 @@ public class BookingMapper {
         }
     }
 
+    /**
+     * To booking booking.
+     *
+     * @param bookingInputDto the booking input dto
+     * @param bookerId        the booker id
+     * @return the booking
+     */
     public Booking toBooking(BookingInputDto bookingInputDto, Long bookerId) {
         return new Booking(
                 null,

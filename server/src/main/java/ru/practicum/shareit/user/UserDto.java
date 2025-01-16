@@ -8,6 +8,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
 
+/**
+ * The type User dto.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
